@@ -21,8 +21,7 @@ void loading(bookT* lib, int size);
 void saving(bookT* lib, int size);
 
 void main() {
-	FILE* fpAdmin = fopen("database.txt", "w");
-	FILE* fpGuest = fopen("database.txt", "r");
+
 
 	int NoOfbooks = 4;
 	int menu;
@@ -135,17 +134,20 @@ void addBook(bookT* lib, int size) {
 	int i;
 	for (i = 0; i < size; i++)
 	{
-		printf("Please enter the isbn for the book %d\n",i +1);
-		scanf("%s", &(lib + i)->num);
+		if ((lib + i)->num == 0) {
+			printf("Please enter the isbn for the book %d\n", i + 1);
+			scanf("%s", &(lib + i)->num);
 
-		printf("Please enter the title for the book %d \n",i+1);
-		scanf("%s", (lib + i)->title);
+			printf("Please enter the title for the book %d \n", i + 1);
+			scanf("%s", (lib + i)->title);
 
-		printf("Please enter the author for the book %d\n",i+1);
-		scanf("%s", (lib + i)->author);
+			printf("Please enter the author for the book %d\n", i + 1);
+			scanf("%s", (lib + i)->author);
 
-		printf("Please enter the price for the book %d\n",i+1);
-		scanf("%f", &(lib + i)->price);
+			printf("Please enter the price for the book %d\n", i + 1);
+			scanf("%f", &(lib + i)->price);
+			return;
+		}
 	}
 }
 
@@ -217,8 +219,9 @@ void loading(bookT* lib, int size) {
 	{
 		while (!feof(fpGuest)) {
 			for (i = 0; i < size; i++) {
-
-				fscanf("%d %s %s %f\n", &(lib + i)->num, (lib + i)->title, (lib + i)->author, &(lib + i)->price);
+				if ((lib + i)->num == 0) {
+					fscanf("%d %s %s %f\n", &(lib + i)->num, (lib + i)->title, (lib + i)->author, &(lib + i)->price);
+				}
 			}
 
 		}
